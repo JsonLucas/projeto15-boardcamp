@@ -1,5 +1,5 @@
 import express, { json } from 'express';
-import { port } from './utils/env-config';
+import { port } from './utils/env-config.js';
 import cors from 'cors';
 import router from './routes/routes.js';
 
