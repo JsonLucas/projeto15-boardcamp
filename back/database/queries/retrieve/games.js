@@ -1,0 +1,13 @@
+import dbConnection from '../../dbConnection.js';
+
+export const getAllGames = async () => {
+    const sql = "SELECT * FROM games";
+    const games = await dbConnection.query(sql);
+    return games;
+} 
+
+export const queryGames = async (queryStr) => {
+    const sql = `SELECT * FROM games WHERE name LIKE "$str%" or name LIKE "%$queryStr%"`;
+    const result = await dbConnection.query(sql, [queryStr]);
+    return result;
+}
