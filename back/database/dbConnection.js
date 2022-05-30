@@ -1,14 +1,12 @@
 import pg from 'pg';
-import { dbName, dbPort, dbUri, host, password, user } from "../utils/env-config.js";
+import { dbUri } from "../utils/env-config.js";
 
 const { Pool } = pg;
-const dbConnection = new Pool({
+const db = {
   connectionString: dbUri,
-  user: user,
-  password: password,
-  host: host,
-  port: dbPort,
-  database: dbName
-});
+  ssl: { rejectUnauthorized: false }
+};
+
+const dbConnection = new Pool(db);
 
 export default dbConnection;
