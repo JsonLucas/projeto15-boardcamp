@@ -18,6 +18,13 @@ const schemaInsertCustomer = joi.object({
     birthday: joi.date().required()
 });
 
+const schemaInsertRent = joi.object({
+    customerId: joi.number().min(1).required(),
+    gameId: joi.number().min(1).required(),
+    daysRented: joi.number().min(1).required()
+
+});
+
 export const validateInsertCategory = (categoryName) => {
     if(schemaInsertCategory.validate(categoryName).error){
         return false;
@@ -34,6 +41,13 @@ export const validateInsertGame = (gameData) => {
 
 export const validateInsertCustomer = (customerData) => {
     if(schemaInsertCustomer.validate(customerData).error){
+        return false;
+    }
+    return true;
+}
+
+export const validateInsertRent = (rentData) => {
+    if(schemaInsertRent.validate(rentData).error){
         return false;
     }
     return true;

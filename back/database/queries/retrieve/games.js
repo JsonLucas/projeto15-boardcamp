@@ -11,3 +11,9 @@ export const queryGames = async (queryStr) => {
     const result = await dbConnection.query(sql);
     return result;
 }
+
+export const getGameById = async (gameId) => {
+    const sql = `SELECT * FROM games WHERE id=${gameId}`;
+    const result = await dbConnection.query(sql);
+    return result;
+}

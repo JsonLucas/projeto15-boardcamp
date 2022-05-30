@@ -1,24 +1,33 @@
 import createRental from "../database/queries/create/rentals.js";
+import deleteRent from "../database/queries/delete/rentals.js";
 import { getRentals, getCustomerRentals, getGameRentals } from "../database/queries/retrieve/rentals.js";
 
 const rentalsController = async (req, res) => {
     try{
         const { id, body } = res.locals;
-        const keys = Object.keys(id);
-        if(id){
+        console.log(id);
+        const { query } = req;
+        if(query){
+            const keys = Object.keys(query);
             if(keys.find((item) => { return item === 'customerId' })){
-                const query = await getCustomerRentals(id.customerId);
-                res.status(200).send(query.rows);
+                const queryCustomerRentals = await getCustomerRentals(query.customerId);
+                res.status(200).send(queryCustomerRentals.rows);
             }else if(keys.find((item) => { return item === 'gameId' })){
-                const query = await getGameRentals(id.gameId);
-                res.status(200).send(query.rows);
+                const queryGameRentals = await getGameRentals(query.gameId);
+                res.status(200).send(queryGameRentals.rows);
             }else{
-                const query = await getRentals();
-                res.status(200).send(query.rows);
+                const rentals = await getRentals();
+                res.status(200).send(rentals.rows);
             }
-        }else{
+        }else if(body){
             await createRental(body);
-            res.sendStatus(201)
+            res.sendStatus(201);
+        }else if(id){
+            await deleteRent(id);
+            res.sendStatus(200);
+        }else{
+            const rentals = await getRentals();
+            res.status(200).send(rentals.rows);
         }
     }catch(e){
         console.log(e.message);
