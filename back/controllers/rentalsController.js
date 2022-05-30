@@ -5,14 +5,13 @@ import { getRentals, getCustomerRentals, getGameRentals } from "../database/quer
 const rentalsController = async (req, res) => {
     try{
         const { id, body } = res.locals;
-        console.log(id);
         const { query } = req;
-        if(query){
-            const keys = Object.keys(query);
-            if(keys.find((item) => { return item === 'customerId' })){
+        const queryKeys = Object.keys(query);
+        if(queryKeys.length > 0){
+            if(queryKeys.find((item) => { return item === 'customerId' })){
                 const queryCustomerRentals = await getCustomerRentals(query.customerId);
                 res.status(200).send(queryCustomerRentals.rows);
-            }else if(keys.find((item) => { return item === 'gameId' })){
+            }else if(queryKeys.find((item) => { return item === 'gameId' })){
                 const queryGameRentals = await getGameRentals(query.gameId);
                 res.status(200).send(queryGameRentals.rows);
             }else{

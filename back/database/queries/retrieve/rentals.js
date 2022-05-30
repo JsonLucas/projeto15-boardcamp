@@ -11,7 +11,11 @@ export const getRentals = async () => {
         for(let i = 0; i < rows.length; i++){
             const game = await getGameById(rows[i].gameId);
             const customer = await getCustomerById(rows[i].customerId);
-            result.push(rows[i], {customer: {...customer}}, {game: {...game}});
+            result.push({
+                ...rows[i], 
+                customer: {id: customer.rows[0].id, name: customer.rows[0].name}, 
+                game: {...game.rows[0]}
+            });
         }
         return result;
     }
@@ -27,24 +31,39 @@ export const getRentalById = async (rentId) => {
 export const getCustomerRentals = async (customerId) => {
     const sql = `SELECT * FROM rentals WHERE customerId=${customerId}`;
     const customerRentals = await dbConnection.query(sql);
-    const { rows } = customerRentals;
-    let result = [];
-    for(let i = 0; i < rows.length; i++){
-        const game = await getGameById(rows[i].gameId);
-        const customer = await getCustomerById(rows[i].customerId);
-        result.push(rows[i], {customer: {...customer}}, {game: {...game}});
+    if(customerRentals.rowCount > 0){
+        const { rows } = customerRentals;
+        let result = [];
+        for(let i = 0; i < rows.length; i++){
+            const game = await getGameById(rows[i].gameId);
+            const customer = await getCustomerById(rows[i].customerId);
+            result.push({
+                ...rows[i], 
+                customer: {id: customer.rows[0].id, name: customer.rows[0].name}, 
+                game: {...game.rows[0]}
+            });
+        }
+        return result;
     }
-    return result;
+    return query;
 } 
 
 export const getGameRentals = async (gameId) => {
     const sql = `SELECT * FROM rentals WHERE gameId=${gameId}`;
     const gameRentals = await dbConnection.query(sql);
-    let result = [];
-    for(let i = 0; i < rows.length; i++){
-        const game = await getGameById(rows[i].gameId);
-        const customer = await getCustomerById(rows[i].customerId);
-        result.push(rows[i], {customer: {...customer}}, {game: {...game}});
+    if(gameRentals.rowCount > 0){
+        const { rows } = gameRentals;
+        let result = [];
+        for(let i = 0; i < rows.length; i++){
+            const game = await getGameById(rows[i].gameId);
+            const customer = await getCustomerById(rows[i].customerId);
+            result.push({
+                ...rows[i], 
+                customer: {id: customer.rows[0].id, name: customer.rows[0].name}, 
+                game: {...game.rows[0]}
+            });
+        }
+        return result;
     }
-    return result;
+    return query;
 } 

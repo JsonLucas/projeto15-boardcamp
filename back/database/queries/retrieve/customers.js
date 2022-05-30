@@ -12,7 +12,7 @@ export const groupOfCustomers = async (str) => {
 }
 
 export const getCustomerById = async (id) => {
-    const sql = `SELECT FROM customers WHERE id=${id}`;
+    const sql = `SELECT * FROM customers WHERE id=${id}`;
     const query = await dbConnection.query(sql);
     return query;
 }

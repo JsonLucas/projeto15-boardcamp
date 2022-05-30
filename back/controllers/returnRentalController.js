@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import finalizeRental from "../database/queries/update/rental.js";
+import finalizeRental from "../database/queries/update/rentals.js";
 const rerturnRentalController = async (req, res) => {
     try{
         const { id, rentDate, gameId } = res.locals;
