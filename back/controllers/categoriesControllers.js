@@ -6,7 +6,7 @@ const categoriesController = async (req, res) => {
         if(res.locals){
             const { name } = res.locals;
             const query = await verifyCategoryByName(name);
-            if(query.rows.length > 0){
+            if(query.rowCount > 0){
                 res.sendStatus(409);
                 return;
             }

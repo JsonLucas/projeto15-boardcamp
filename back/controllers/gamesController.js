@@ -10,11 +10,11 @@ const gamesController = async (req, res) => {
             res.sendStatus(200);
         } else {
             if (name) {
-                const queryGames = await queryGames(name);
-                res.status(200).send(queryGames);
+                const query = await queryGames(name);
+                res.status(200).send(query.rows);
             } else {
                 const games = await getAllGames();
-                res.status(200).send(games);
+                res.status(200).send(games.rows);
             }
         }
         return;

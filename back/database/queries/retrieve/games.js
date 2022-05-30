@@ -7,7 +7,7 @@ export const getAllGames = async () => {
 } 
 
 export const queryGames = async (queryStr) => {
-    const sql = `SELECT * FROM games WHERE name LIKE "$str%" or name LIKE "%$queryStr%"`;
-    const result = await dbConnection.query(sql, [queryStr]);
+    const sql = `SELECT * FROM games WHERE name LIKE '${queryStr}%' or name LIKE '%${queryStr}%'`;
+    const result = await dbConnection.query(sql);
     return result;
 }

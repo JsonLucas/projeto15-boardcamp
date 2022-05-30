@@ -13,10 +13,7 @@ export const verifyCategoryById = async (categoryId) => {
 }
 
 export const verifyCategoryByName = async (categoryName) => {
-    const sql = `SELECT * FROM categories WHERE name LIKE '%${categoryName}%'`;
+    const sql = `SELECT * FROM categories WHERE name='${categoryName}'`;
     const query = await dbConnection.query(sql);
-    if(query.rows){
-        return query;
-    }
-    return [];
+    return query;
 }

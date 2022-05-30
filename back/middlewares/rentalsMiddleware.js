@@ -1,5 +1,11 @@
 const rentalsMiddleware = (req, res, next) => {
-    console.log(req.body);
+    if(req.query){
+        const id = {...req.query};
+        res.locals.id = id;
+    }else{
+        const { body } = req;
+        res.locals.body = body;
+    }
     next();
 }
 
