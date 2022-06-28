@@ -23,14 +23,14 @@ export const getRentals = async () => {
 }
 
 export const getRentalById = async (rentId) => {
-    const sql = `SELECT * FROM rentals WHERE id=${rentId}`;
-    const rental = await dbConnection.query(sql);
+    const sql = `SELECT * FROM rentals WHERE id=$1`;
+    const rental = await dbConnection.query(sql, [rentId]);
     return rental;
 }
 
 export const getCustomerRentals = async (customerId) => {
-    const sql = `SELECT * FROM rentals WHERE customerId=${customerId}`;
-    const customerRentals = await dbConnection.query(sql);
+    const sql = `SELECT * FROM rentals WHERE "customerId"=$1`;
+    const customerRentals = await dbConnection.query(sql, [customerId]);
     if(customerRentals.rowCount > 0){
         const { rows } = customerRentals;
         let result = [];
@@ -49,8 +49,8 @@ export const getCustomerRentals = async (customerId) => {
 } 
 
 export const getGameRentals = async (gameId) => {
-    const sql = `SELECT * FROM rentals WHERE gameId=${gameId}`;
-    const gameRentals = await dbConnection.query(sql);
+    const sql = `SELECT * FROM rentals WHERE "gameId"=$1`;
+    const gameRentals = await dbConnection.query(sql, [gameId]);
     if(gameRentals.rowCount > 0){
         const { rows } = gameRentals;
         let result = [];

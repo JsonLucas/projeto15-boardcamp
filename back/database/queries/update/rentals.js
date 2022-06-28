@@ -11,8 +11,8 @@ const finalizeRental = async (rentId, rentDate, gameId) => {
     
     const delayFee = formatDays*game.rows[0].pricePerDay;
 
-    const sql = `UPDATE rentals SET returnDate='${todaysDate}', delayFee='${delayFee}' WHERE id=${rentId}`;
-    const rental = await dbConnection.query(sql);
+    const sql = `UPDATE rentals SET "returnDate"=$1 , "delayFee"=$2 WHERE id=$3`;
+    const rental = await dbConnection.query(sql, [todaysDate, delayFee, gameId]);
     return rental;
 }
 

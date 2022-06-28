@@ -7,13 +7,13 @@ export const getCategories = async () => {
 }
 
 export const verifyCategoryById = async (categoryId) => {
-    const sql = `SELECT * FROM categories WHERE id=${categoryId}`
-    const query = await dbConnection.query(sql);
+    const sql = `SELECT * FROM categories WHERE id=$1`
+    const query = await dbConnection.query(sql, [categoryId]);
     return query;
 }
 
 export const verifyCategoryByName = async (categoryName) => {
-    const sql = `SELECT * FROM categories WHERE name='${categoryName}'`;
-    const query = await dbConnection.query(sql);
+    const sql = `SELECT * FROM categories WHERE name=$1`;
+    const query = await dbConnection.query(sql, [categoryName]);
     return query;
 }

@@ -8,9 +8,9 @@ const createRental = async (rentalData) => {
     const { rows } = getGamePrice;
     const originalPrice = rows[0].pricePerDay * daysRented;
     const date = dayjs(Date.now()).format('YYYY-MM-DD');
-    const sql = `INSERT INTO rentals (customerId, gameId, rentDate, daysRented, originalPrice) 
-    VALUES (${customerId}, ${gameId}, '${date}', ${daysRented}, ${originalPrice})`;
-    const creation = await dbConnection.query(sql);
+    const sql = `INSERT INTO rentals ("customerId", "gameId", "rentDate", "daysRented", "originalPrice") 
+    VALUES ('$1', '$2', '$3', '$4', '$5')`;
+    const creation = await dbConnection.query(sql, [customerId, gameId, date, daysRented, originalPrice]);
     return creation;
 }
 
